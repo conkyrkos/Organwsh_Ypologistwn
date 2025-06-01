@@ -1,0 +1,1 @@
+/home/ise/Desktop/Labratory/PC.vhd

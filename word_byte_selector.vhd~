@@ -1,0 +1,70 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date:    20:36:23 03/16/2025 
+-- Design Name: 
+-- Module Name:    word_byte_selector - Behavioral 
+-- Project Name: 
+-- Target Devices: 
+-- Tool versions: 
+-- Description: 
+--
+-- Dependencies: 
+--
+-- Revision: 
+-- Revision 0.01 - File Created
+-- Additional Comments: 
+--
+----------------------------------------------------------------------------------
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx primitives in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity word_byte_selector is
+    Port ( number : in  STD_LOGIC_VECTOR (31 downto 0);
+           selector : in  STD_LOGIC;
+			  byte : in  STD_LOGIC_VECTOR (1 downto 0);
+           selector_output : out  STD_LOGIC_VECTOR (31 downto 0));
+end word_byte_selector;
+
+architecture Behavioral of word_byte_selector is
+begin
+process(number,selector,byte)
+begin 
+--wait until number'event or selector'event;
+
+case (selector) is ---istraion chart
+	when  '1'=> -- 1 byte = 8 bit---return byte
+		case(byte) is
+		when "00"=>
+			selector_output<= (others => number(7))&number(7 downto 0);--1o
+		when "01"=> 
+			selector_output<= (others => number(15)) & number(15 downto 8);--2O
+		when "10"=>
+			selector_output<= (others => number(23)) & number(23 downto 16);--3O
+		when "11"=>
+		selector_output <= ((others => number(31)) & number(31 downto 24));--4O BYTE
+		WHEN OTHERS=>
+		
+		end case;
+	when '0' =>  --worad=>32bits
+   	selector_output <= number;
+	when others=>
+	
+	end case;
+	end process;
+
+
+
+
+end Behavioral;
+
